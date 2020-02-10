@@ -127,12 +127,3 @@ extension Google_Cloud_Speech_V1_SpeechProvider {
   }
 }
 
-
-/// Provides conformance to `GRPCPayload` for the request and response messages
-extension Google_Cloud_Speech_V1_RecognizeRequest: GRPCProtobufPayload {}
-extension Google_Cloud_Speech_V1_RecognizeResponse: GRPCProtobufPayload {}
-extension Google_Cloud_Speech_V1_LongRunningRecognizeRequest: GRPCProtobufPayload {}
-extension Google_Longrunning_Operation: GRPCProtobufPayload {}
-extension Google_Cloud_Speech_V1_StreamingRecognizeRequest: GRPCProtobufPayload {}
-extension Google_Cloud_Speech_V1_StreamingRecognizeResponse: GRPCProtobufPayload {}
-

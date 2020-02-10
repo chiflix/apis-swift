@@ -168,15 +168,3 @@ extension Sagittarius_Media_V1_MediaProvider {
   }
 }
 
-
-/// Provides conformance to `GRPCPayload` for the request and response messages
-extension Sagittarius_Media_V1_GetInfoRequest: GRPCProtobufPayload {}
-extension Sagittarius_Media_V1_Info: GRPCProtobufPayload {}
-extension Sagittarius_Media_V1_UpdateInfoRequest: GRPCProtobufPayload {}
-extension Sagittarius_Media_V1_ThumbnailTimeRangesRequest: GRPCProtobufPayload {}
-extension Sagittarius_Media_V1_ThumbnailTimeRangesResponse: GRPCProtobufPayload {}
-extension Sagittarius_Media_V1_ThumbnailRequest: GRPCProtobufPayload {}
-extension Sagittarius_Media_V1_ThumbnailResponse: GRPCProtobufPayload {}
-extension Sagittarius_Media_V1_UpdateThumbnailRequest: GRPCProtobufPayload {}
-extension Google_Rpc_Status: GRPCProtobufPayload {}
-

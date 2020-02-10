@@ -147,13 +147,3 @@ extension Google_Longrunning_OperationsProvider {
   }
 }
 
-
-/// Provides conformance to `GRPCPayload` for the request and response messages
-extension Google_Longrunning_ListOperationsRequest: GRPCProtobufPayload {}
-extension Google_Longrunning_ListOperationsResponse: GRPCProtobufPayload {}
-extension Google_Longrunning_GetOperationRequest: GRPCProtobufPayload {}
-extension Google_Longrunning_Operation: GRPCProtobufPayload {}
-extension Google_Longrunning_DeleteOperationRequest: GRPCProtobufPayload {}
-extension SwiftProtobuf.Google_Protobuf_Empty: GRPCProtobufPayload {}
-extension Google_Longrunning_CancelOperationRequest: GRPCProtobufPayload {}
-

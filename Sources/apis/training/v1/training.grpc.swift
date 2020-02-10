@@ -104,9 +104,3 @@ extension Sagittarius_Training_V1_TrainngProvider {
   }
 }
 
-
-/// Provides conformance to `GRPCPayload` for the request and response messages
-extension Sagittarius_Training_V1_TrainingData: GRPCProtobufPayload {}
-extension Google_Rpc_Status: GRPCProtobufPayload {}
-extension Sagittarius_Training_V1_StreamingTrainingRequest: GRPCProtobufPayload {}
-

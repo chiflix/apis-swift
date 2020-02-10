@@ -84,8 +84,3 @@ extension Sagittarius_Health_V1_HealthProvider {
   }
 }
 
-
-/// Provides conformance to `GRPCPayload` for the request and response messages
-extension Sagittarius_Health_V1_HealthCheckRequest: GRPCProtobufPayload {}
-extension Sagittarius_Health_V1_HealthCheckResponse: GRPCProtobufPayload {}
-

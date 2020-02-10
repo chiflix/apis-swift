@@ -211,20 +211,3 @@ extension Sagittarius_Translation_V1_TranslationProvider {
   }
 }
 
-
-/// Provides conformance to `GRPCPayload` for the request and response messages
-extension Sagittarius_Translation_V1_MediaTranslationRequest: GRPCProtobufPayload {}
-extension Sagittarius_Translation_V1_MediaTranslationResponse: GRPCProtobufPayload {}
-extension Sagittarius_Translation_V1_DetectionRequest: GRPCProtobufPayload {}
-extension Sagittarius_Translation_V1_DetectionResponse: GRPCProtobufPayload {}
-extension Sagittarius_Translation_V1_TranscriptRequest: GRPCProtobufPayload {}
-extension Sagittarius_Translation_V1_TranscriptResponse: GRPCProtobufPayload {}
-extension Sagittarius_Translation_V1_TextTranslationRequest: GRPCProtobufPayload {}
-extension Sagittarius_Translation_V1_TextTranslationResponse: GRPCProtobufPayload {}
-extension Sagittarius_Translation_V1_StreamingTranslationRequest: GRPCProtobufPayload {}
-extension Sagittarius_Translation_V1_StreamingTranslationResponse: GRPCProtobufPayload {}
-extension Sagittarius_Translation_V1_StreamingTranslationTaskRequest: GRPCProtobufPayload {}
-extension Sagittarius_Translation_V1_StreamingTranslationTaskResponse: GRPCProtobufPayload {}
-extension Sagittarius_Translation_V1_UserQuotaRequest: GRPCProtobufPayload {}
-extension Sagittarius_Translation_V1_UserQuotaResponse: GRPCProtobufPayload {}
-

@@ -2,7 +2,7 @@
 
 The SagiAPI with Swift.
 
-### Preparation:
+### Preparation For Update Protocols:
 
 ```shell
 git clone https://github.com/grpc/grpc-swift.git -b nio
@@ -16,6 +16,14 @@ Add to your PATH environment variable for plugins.
 Go to the src/swift directory then to run:
 
 ```shell
+git clone https://github.com/chiflix/apis.git
+cd apis
+sh codegen.sh
+
+cd src/swift
 swift build
 swift test
 ```
+
+### Using As Swift Package
+It's easily using by swift package manager, Just add this repo address to your package configure file.

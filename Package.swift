@@ -15,7 +15,7 @@ let package = Package(
     ],
     dependencies: [
         // Dependencies declare other packages that this package depends on.
-        .package(url: "https://github.com/grpc/grpc-swift.git", .branch("nio")),
+        .package(url: "https://github.com/grpc/grpc-swift.git", .revision("5f40a43567495b534dd445e6dd60181dff5a28d6")),
         .package(url: "https://github.com/apple/swift-protobuf.git", from: "1.8.0")
     ],
     targets: [

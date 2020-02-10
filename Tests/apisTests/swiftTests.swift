@@ -38,7 +38,7 @@ class HealthCheckConnection {
             cafile = Bundle.main.path(forResource: "ca", ofType: ".pem")!
         #else
             let dir = URL(fileURLWithPath: FileManager.default.currentDirectoryPath, isDirectory: true)
-                .appendingPathComponent("../nodejs/test", isDirectory: true)
+                .appendingPathComponent("./Tests/cert", isDirectory: true)
             certfile = dir.appendingPathComponent("cert.pem").path
             keyfile = dir.appendingPathComponent("key.pem").path
             cafile = dir.appendingPathComponent("ca.pem").path

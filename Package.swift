@@ -7,7 +7,7 @@ let package = Package(
     name: "apis",
     platforms: [
       // We can't use `.watchOS(.v6)` since it isn't available with `swift-tools-version:5.0`.
-      .macOS(.v10_12), .iOS(.v10), .watchOS("6.0")
+      .macOS(.v10_12), .iOS(.v10), .tvOS(.v10), .watchOS("6.0")
     ],
     products: [
         // Products define the executables and libraries produced by a package, and make them visible to other packages.

@@ -20,105 +20,145 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 //
-import Foundation
 import GRPC
 import NIO
-import NIOHTTP1
 import SwiftProtobuf
 
 
-/// Usage: instantiate Google_Cloud_Speech_V1_SpeechServiceClient, then call methods of this protocol to make API calls.
-public protocol Google_Cloud_Speech_V1_SpeechService {
-  func recognize(_ request: Google_Cloud_Speech_V1_RecognizeRequest, callOptions: CallOptions?) -> UnaryCall<Google_Cloud_Speech_V1_RecognizeRequest, Google_Cloud_Speech_V1_RecognizeResponse>
-  func longRunningRecognize(_ request: Google_Cloud_Speech_V1_LongRunningRecognizeRequest, callOptions: CallOptions?) -> UnaryCall<Google_Cloud_Speech_V1_LongRunningRecognizeRequest, Google_Longrunning_Operation>
-  func streamingRecognize(callOptions: CallOptions?, handler: @escaping (Google_Cloud_Speech_V1_StreamingRecognizeResponse) -> Void) -> BidirectionalStreamingCall<Google_Cloud_Speech_V1_StreamingRecognizeRequest, Google_Cloud_Speech_V1_StreamingRecognizeResponse>
+/// Usage: instantiate Google_Cloud_Speech_V1_SpeechClient, then call methods of this protocol to make API calls.
+public protocol Google_Cloud_Speech_V1_SpeechClientProtocol: GRPCClient {
+  func recognize(
+    _ request: Google_Cloud_Speech_V1_RecognizeRequest,
+    callOptions: CallOptions?
+  ) -> UnaryCall<Google_Cloud_Speech_V1_RecognizeRequest, Google_Cloud_Speech_V1_RecognizeResponse>
+
+  func longRunningRecognize(
+    _ request: Google_Cloud_Speech_V1_LongRunningRecognizeRequest,
+    callOptions: CallOptions?
+  ) -> UnaryCall<Google_Cloud_Speech_V1_LongRunningRecognizeRequest, Google_Longrunning_Operation>
+
+  func streamingRecognize(
+    callOptions: CallOptions?,
+    handler: @escaping (Google_Cloud_Speech_V1_StreamingRecognizeResponse) -> Void
+  ) -> BidirectionalStreamingCall<Google_Cloud_Speech_V1_StreamingRecognizeRequest, Google_Cloud_Speech_V1_StreamingRecognizeResponse>
+
 }
 
-public final class Google_Cloud_Speech_V1_SpeechServiceClient: GRPCClient, Google_Cloud_Speech_V1_SpeechService {
-  public let connection: ClientConnection
-  public var defaultCallOptions: CallOptions
+extension Google_Cloud_Speech_V1_SpeechClientProtocol {
 
-  /// Creates a client for the google.cloud.speech.v1.Speech service.
-  ///
-  /// - Parameters:
-  ///   - connection: `ClientConnection` to the service host.
-  ///   - defaultCallOptions: Options to use for each service call if the user doesn't provide them.
-  public init(connection: ClientConnection, defaultCallOptions: CallOptions = CallOptions()) {
-    self.connection = connection
-    self.defaultCallOptions = defaultCallOptions
-  }
-
-  /// Asynchronous unary call to Recognize.
+  /// Performs synchronous speech recognition: receive results after all audio
+  /// has been sent and processed.
   ///
   /// - Parameters:
   ///   - request: Request to send to Recognize.
-  ///   - callOptions: Call options; `self.defaultCallOptions` is used if `nil`.
+  ///   - callOptions: Call options.
   /// - Returns: A `UnaryCall` with futures for the metadata, status and response.
-  public func recognize(_ request: Google_Cloud_Speech_V1_RecognizeRequest, callOptions: CallOptions? = nil) -> UnaryCall<Google_Cloud_Speech_V1_RecognizeRequest, Google_Cloud_Speech_V1_RecognizeResponse> {
-    return self.makeUnaryCall(path: "/google.cloud.speech.v1.Speech/Recognize",
-                              request: request,
-                              callOptions: callOptions ?? self.defaultCallOptions)
+  public func recognize(
+    _ request: Google_Cloud_Speech_V1_RecognizeRequest,
+    callOptions: CallOptions? = nil
+  ) -> UnaryCall<Google_Cloud_Speech_V1_RecognizeRequest, Google_Cloud_Speech_V1_RecognizeResponse> {
+    return self.makeUnaryCall(
+      path: "/google.cloud.speech.v1.Speech/Recognize",
+      request: request,
+      callOptions: callOptions ?? self.defaultCallOptions
+    )
   }
 
-  /// Asynchronous unary call to LongRunningRecognize.
+  /// Performs asynchronous speech recognition: receive results via the
+  /// google.longrunning.Operations interface. Returns either an
+  /// `Operation.error` or an `Operation.response` which contains
+  /// a `LongRunningRecognizeResponse` message.
   ///
   /// - Parameters:
   ///   - request: Request to send to LongRunningRecognize.
-  ///   - callOptions: Call options; `self.defaultCallOptions` is used if `nil`.
+  ///   - callOptions: Call options.
   /// - Returns: A `UnaryCall` with futures for the metadata, status and response.
-  public func longRunningRecognize(_ request: Google_Cloud_Speech_V1_LongRunningRecognizeRequest, callOptions: CallOptions? = nil) -> UnaryCall<Google_Cloud_Speech_V1_LongRunningRecognizeRequest, Google_Longrunning_Operation> {
-    return self.makeUnaryCall(path: "/google.cloud.speech.v1.Speech/LongRunningRecognize",
-                              request: request,
-                              callOptions: callOptions ?? self.defaultCallOptions)
+  public func longRunningRecognize(
+    _ request: Google_Cloud_Speech_V1_LongRunningRecognizeRequest,
+    callOptions: CallOptions? = nil
+  ) -> UnaryCall<Google_Cloud_Speech_V1_LongRunningRecognizeRequest, Google_Longrunning_Operation> {
+    return self.makeUnaryCall(
+      path: "/google.cloud.speech.v1.Speech/LongRunningRecognize",
+      request: request,
+      callOptions: callOptions ?? self.defaultCallOptions
+    )
   }
 
-  /// Asynchronous bidirectional-streaming call to StreamingRecognize.
+  /// Performs bidirectional streaming speech recognition: receive results while
+  /// sending audio. This method is only available via the gRPC API (not REST).
   ///
   /// Callers should use the `send` method on the returned object to send messages
   /// to the server. The caller should send an `.end` after the final message has been sent.
   ///
   /// - Parameters:
-  ///   - callOptions: Call options; `self.defaultCallOptions` is used if `nil`.
+  ///   - callOptions: Call options.
   ///   - handler: A closure called when each response is received from the server.
   /// - Returns: A `ClientStreamingCall` with futures for the metadata and status.
-  public func streamingRecognize(callOptions: CallOptions? = nil, handler: @escaping (Google_Cloud_Speech_V1_StreamingRecognizeResponse) -> Void) -> BidirectionalStreamingCall<Google_Cloud_Speech_V1_StreamingRecognizeRequest, Google_Cloud_Speech_V1_StreamingRecognizeResponse> {
-    return self.makeBidirectionalStreamingCall(path: "/google.cloud.speech.v1.Speech/StreamingRecognize",
-                                               callOptions: callOptions ?? self.defaultCallOptions,
-                                               handler: handler)
+  public func streamingRecognize(
+    callOptions: CallOptions? = nil,
+    handler: @escaping (Google_Cloud_Speech_V1_StreamingRecognizeResponse) -> Void
+  ) -> BidirectionalStreamingCall<Google_Cloud_Speech_V1_StreamingRecognizeRequest, Google_Cloud_Speech_V1_StreamingRecognizeResponse> {
+    return self.makeBidirectionalStreamingCall(
+      path: "/google.cloud.speech.v1.Speech/StreamingRecognize",
+      callOptions: callOptions ?? self.defaultCallOptions,
+      handler: handler
+    )
   }
+}
 
+public final class Google_Cloud_Speech_V1_SpeechClient: Google_Cloud_Speech_V1_SpeechClientProtocol {
+  public let channel: GRPCChannel
+  public var defaultCallOptions: CallOptions
+
+  /// Creates a client for the google.cloud.speech.v1.Speech service.
+  ///
+  /// - Parameters:
+  ///   - channel: `GRPCChannel` to the service host.
+  ///   - defaultCallOptions: Options to use for each service call if the user doesn't provide them.
+  public init(channel: GRPCChannel, defaultCallOptions: CallOptions = CallOptions()) {
+    self.channel = channel
+    self.defaultCallOptions = defaultCallOptions
+  }
 }
 
 /// To build a server, implement a class that conforms to this protocol.
 public protocol Google_Cloud_Speech_V1_SpeechProvider: CallHandlerProvider {
+  /// Performs synchronous speech recognition: receive results after all audio
+  /// has been sent and processed.
   func recognize(request: Google_Cloud_Speech_V1_RecognizeRequest, context: StatusOnlyCallContext) -> EventLoopFuture<Google_Cloud_Speech_V1_RecognizeResponse>
+  /// Performs asynchronous speech recognition: receive results via the
+  /// google.longrunning.Operations interface. Returns either an
+  /// `Operation.error` or an `Operation.response` which contains
+  /// a `LongRunningRecognizeResponse` message.
   func longRunningRecognize(request: Google_Cloud_Speech_V1_LongRunningRecognizeRequest, context: StatusOnlyCallContext) -> EventLoopFuture<Google_Longrunning_Operation>
+  /// Performs bidirectional streaming speech recognition: receive results while
+  /// sending audio. This method is only available via the gRPC API (not REST).
   func streamingRecognize(context: StreamingResponseCallContext<Google_Cloud_Speech_V1_StreamingRecognizeResponse>) -> EventLoopFuture<(StreamEvent<Google_Cloud_Speech_V1_StreamingRecognizeRequest>) -> Void>
 }
 
 extension Google_Cloud_Speech_V1_SpeechProvider {
-  public var serviceName: String { return "google.cloud.speech.v1.Speech" }
+  public var serviceName: Substring { return "google.cloud.speech.v1.Speech" }
 
   /// Determines, calls and returns the appropriate request handler, depending on the request's method.
   /// Returns nil for methods not handled by this service.
-  public func handleMethod(_ methodName: String, callHandlerContext: CallHandlerContext) -> GRPCCallHandler? {
+  public func handleMethod(_ methodName: Substring, callHandlerContext: CallHandlerContext) -> GRPCCallHandler? {
     switch methodName {
     case "Recognize":
-      return UnaryCallHandler(callHandlerContext: callHandlerContext) { context in
+      return CallHandlerFactory.makeUnary(callHandlerContext: callHandlerContext) { context in
         return { request in
           self.recognize(request: request, context: context)
         }
       }
 
     case "LongRunningRecognize":
-      return UnaryCallHandler(callHandlerContext: callHandlerContext) { context in
+      return CallHandlerFactory.makeUnary(callHandlerContext: callHandlerContext) { context in
         return { request in
           self.longRunningRecognize(request: request, context: context)
         }
       }
 
     case "StreamingRecognize":
-      return BidirectionalStreamingCallHandler(callHandlerContext: callHandlerContext) { context in
+      return CallHandlerFactory.makeBidirectionalStreaming(callHandlerContext: callHandlerContext) { context in
         return self.streamingRecognize(context: context)
       }
 

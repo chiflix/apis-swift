@@ -20,123 +20,199 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 //
-import Foundation
 import GRPC
 import NIO
-import NIOHTTP1
 import SwiftProtobuf
 
 
-/// Usage: instantiate Google_Longrunning_OperationsServiceClient, then call methods of this protocol to make API calls.
-public protocol Google_Longrunning_OperationsService {
-  func listOperations(_ request: Google_Longrunning_ListOperationsRequest, callOptions: CallOptions?) -> UnaryCall<Google_Longrunning_ListOperationsRequest, Google_Longrunning_ListOperationsResponse>
-  func getOperation(_ request: Google_Longrunning_GetOperationRequest, callOptions: CallOptions?) -> UnaryCall<Google_Longrunning_GetOperationRequest, Google_Longrunning_Operation>
-  func deleteOperation(_ request: Google_Longrunning_DeleteOperationRequest, callOptions: CallOptions?) -> UnaryCall<Google_Longrunning_DeleteOperationRequest, SwiftProtobuf.Google_Protobuf_Empty>
-  func cancelOperation(_ request: Google_Longrunning_CancelOperationRequest, callOptions: CallOptions?) -> UnaryCall<Google_Longrunning_CancelOperationRequest, SwiftProtobuf.Google_Protobuf_Empty>
+/// Usage: instantiate Google_Longrunning_OperationsClient, then call methods of this protocol to make API calls.
+public protocol Google_Longrunning_OperationsClientProtocol: GRPCClient {
+  func listOperations(
+    _ request: Google_Longrunning_ListOperationsRequest,
+    callOptions: CallOptions?
+  ) -> UnaryCall<Google_Longrunning_ListOperationsRequest, Google_Longrunning_ListOperationsResponse>
+
+  func getOperation(
+    _ request: Google_Longrunning_GetOperationRequest,
+    callOptions: CallOptions?
+  ) -> UnaryCall<Google_Longrunning_GetOperationRequest, Google_Longrunning_Operation>
+
+  func deleteOperation(
+    _ request: Google_Longrunning_DeleteOperationRequest,
+    callOptions: CallOptions?
+  ) -> UnaryCall<Google_Longrunning_DeleteOperationRequest, SwiftProtobuf.Google_Protobuf_Empty>
+
+  func cancelOperation(
+    _ request: Google_Longrunning_CancelOperationRequest,
+    callOptions: CallOptions?
+  ) -> UnaryCall<Google_Longrunning_CancelOperationRequest, SwiftProtobuf.Google_Protobuf_Empty>
+
 }
 
-public final class Google_Longrunning_OperationsServiceClient: GRPCClient, Google_Longrunning_OperationsService {
-  public let connection: ClientConnection
+extension Google_Longrunning_OperationsClientProtocol {
+
+  /// Lists operations that match the specified filter in the request. If the
+  /// server doesn't support this method, it returns `UNIMPLEMENTED`.
+  ///
+  /// NOTE: the `name` binding below allows API services to override the binding
+  /// to use different resource name schemes, such as `users/*/operations`.
+  ///
+  /// - Parameters:
+  ///   - request: Request to send to ListOperations.
+  ///   - callOptions: Call options.
+  /// - Returns: A `UnaryCall` with futures for the metadata, status and response.
+  public func listOperations(
+    _ request: Google_Longrunning_ListOperationsRequest,
+    callOptions: CallOptions? = nil
+  ) -> UnaryCall<Google_Longrunning_ListOperationsRequest, Google_Longrunning_ListOperationsResponse> {
+    return self.makeUnaryCall(
+      path: "/google.longrunning.Operations/ListOperations",
+      request: request,
+      callOptions: callOptions ?? self.defaultCallOptions
+    )
+  }
+
+  /// Gets the latest state of a long-running operation.  Clients can use this
+  /// method to poll the operation result at intervals as recommended by the API
+  /// service.
+  ///
+  /// - Parameters:
+  ///   - request: Request to send to GetOperation.
+  ///   - callOptions: Call options.
+  /// - Returns: A `UnaryCall` with futures for the metadata, status and response.
+  public func getOperation(
+    _ request: Google_Longrunning_GetOperationRequest,
+    callOptions: CallOptions? = nil
+  ) -> UnaryCall<Google_Longrunning_GetOperationRequest, Google_Longrunning_Operation> {
+    return self.makeUnaryCall(
+      path: "/google.longrunning.Operations/GetOperation",
+      request: request,
+      callOptions: callOptions ?? self.defaultCallOptions
+    )
+  }
+
+  /// Deletes a long-running operation. This method indicates that the client is
+  /// no longer interested in the operation result. It does not cancel the
+  /// operation. If the server doesn't support this method, it returns
+  /// `google.rpc.Code.UNIMPLEMENTED`.
+  ///
+  /// - Parameters:
+  ///   - request: Request to send to DeleteOperation.
+  ///   - callOptions: Call options.
+  /// - Returns: A `UnaryCall` with futures for the metadata, status and response.
+  public func deleteOperation(
+    _ request: Google_Longrunning_DeleteOperationRequest,
+    callOptions: CallOptions? = nil
+  ) -> UnaryCall<Google_Longrunning_DeleteOperationRequest, SwiftProtobuf.Google_Protobuf_Empty> {
+    return self.makeUnaryCall(
+      path: "/google.longrunning.Operations/DeleteOperation",
+      request: request,
+      callOptions: callOptions ?? self.defaultCallOptions
+    )
+  }
+
+  /// Starts asynchronous cancellation on a long-running operation.  The server
+  /// makes a best effort to cancel the operation, but success is not
+  /// guaranteed.  If the server doesn't support this method, it returns
+  /// `google.rpc.Code.UNIMPLEMENTED`.  Clients can use
+  /// [Operations.GetOperation][google.longrunning.Operations.GetOperation] or
+  /// other methods to check whether the cancellation succeeded or whether the
+  /// operation completed despite cancellation. On successful cancellation,
+  /// the operation is not deleted; instead, it becomes an operation with
+  /// an [Operation.error][google.longrunning.Operation.error] value with a [google.rpc.Status.code][google.rpc.Status.code] of 1,
+  /// corresponding to `Code.CANCELLED`.
+  ///
+  /// - Parameters:
+  ///   - request: Request to send to CancelOperation.
+  ///   - callOptions: Call options.
+  /// - Returns: A `UnaryCall` with futures for the metadata, status and response.
+  public func cancelOperation(
+    _ request: Google_Longrunning_CancelOperationRequest,
+    callOptions: CallOptions? = nil
+  ) -> UnaryCall<Google_Longrunning_CancelOperationRequest, SwiftProtobuf.Google_Protobuf_Empty> {
+    return self.makeUnaryCall(
+      path: "/google.longrunning.Operations/CancelOperation",
+      request: request,
+      callOptions: callOptions ?? self.defaultCallOptions
+    )
+  }
+}
+
+public final class Google_Longrunning_OperationsClient: Google_Longrunning_OperationsClientProtocol {
+  public let channel: GRPCChannel
   public var defaultCallOptions: CallOptions
 
   /// Creates a client for the google.longrunning.Operations service.
   ///
   /// - Parameters:
-  ///   - connection: `ClientConnection` to the service host.
+  ///   - channel: `GRPCChannel` to the service host.
   ///   - defaultCallOptions: Options to use for each service call if the user doesn't provide them.
-  public init(connection: ClientConnection, defaultCallOptions: CallOptions = CallOptions()) {
-    self.connection = connection
+  public init(channel: GRPCChannel, defaultCallOptions: CallOptions = CallOptions()) {
+    self.channel = channel
     self.defaultCallOptions = defaultCallOptions
   }
-
-  /// Asynchronous unary call to ListOperations.
-  ///
-  /// - Parameters:
-  ///   - request: Request to send to ListOperations.
-  ///   - callOptions: Call options; `self.defaultCallOptions` is used if `nil`.
-  /// - Returns: A `UnaryCall` with futures for the metadata, status and response.
-  public func listOperations(_ request: Google_Longrunning_ListOperationsRequest, callOptions: CallOptions? = nil) -> UnaryCall<Google_Longrunning_ListOperationsRequest, Google_Longrunning_ListOperationsResponse> {
-    return self.makeUnaryCall(path: "/google.longrunning.Operations/ListOperations",
-                              request: request,
-                              callOptions: callOptions ?? self.defaultCallOptions)
-  }
-
-  /// Asynchronous unary call to GetOperation.
-  ///
-  /// - Parameters:
-  ///   - request: Request to send to GetOperation.
-  ///   - callOptions: Call options; `self.defaultCallOptions` is used if `nil`.
-  /// - Returns: A `UnaryCall` with futures for the metadata, status and response.
-  public func getOperation(_ request: Google_Longrunning_GetOperationRequest, callOptions: CallOptions? = nil) -> UnaryCall<Google_Longrunning_GetOperationRequest, Google_Longrunning_Operation> {
-    return self.makeUnaryCall(path: "/google.longrunning.Operations/GetOperation",
-                              request: request,
-                              callOptions: callOptions ?? self.defaultCallOptions)
-  }
-
-  /// Asynchronous unary call to DeleteOperation.
-  ///
-  /// - Parameters:
-  ///   - request: Request to send to DeleteOperation.
-  ///   - callOptions: Call options; `self.defaultCallOptions` is used if `nil`.
-  /// - Returns: A `UnaryCall` with futures for the metadata, status and response.
-  public func deleteOperation(_ request: Google_Longrunning_DeleteOperationRequest, callOptions: CallOptions? = nil) -> UnaryCall<Google_Longrunning_DeleteOperationRequest, SwiftProtobuf.Google_Protobuf_Empty> {
-    return self.makeUnaryCall(path: "/google.longrunning.Operations/DeleteOperation",
-                              request: request,
-                              callOptions: callOptions ?? self.defaultCallOptions)
-  }
-
-  /// Asynchronous unary call to CancelOperation.
-  ///
-  /// - Parameters:
-  ///   - request: Request to send to CancelOperation.
-  ///   - callOptions: Call options; `self.defaultCallOptions` is used if `nil`.
-  /// - Returns: A `UnaryCall` with futures for the metadata, status and response.
-  public func cancelOperation(_ request: Google_Longrunning_CancelOperationRequest, callOptions: CallOptions? = nil) -> UnaryCall<Google_Longrunning_CancelOperationRequest, SwiftProtobuf.Google_Protobuf_Empty> {
-    return self.makeUnaryCall(path: "/google.longrunning.Operations/CancelOperation",
-                              request: request,
-                              callOptions: callOptions ?? self.defaultCallOptions)
-  }
-
 }
 
 /// To build a server, implement a class that conforms to this protocol.
 public protocol Google_Longrunning_OperationsProvider: CallHandlerProvider {
+  /// Lists operations that match the specified filter in the request. If the
+  /// server doesn't support this method, it returns `UNIMPLEMENTED`.
+  ///
+  /// NOTE: the `name` binding below allows API services to override the binding
+  /// to use different resource name schemes, such as `users/*/operations`.
   func listOperations(request: Google_Longrunning_ListOperationsRequest, context: StatusOnlyCallContext) -> EventLoopFuture<Google_Longrunning_ListOperationsResponse>
+  /// Gets the latest state of a long-running operation.  Clients can use this
+  /// method to poll the operation result at intervals as recommended by the API
+  /// service.
   func getOperation(request: Google_Longrunning_GetOperationRequest, context: StatusOnlyCallContext) -> EventLoopFuture<Google_Longrunning_Operation>
+  /// Deletes a long-running operation. This method indicates that the client is
+  /// no longer interested in the operation result. It does not cancel the
+  /// operation. If the server doesn't support this method, it returns
+  /// `google.rpc.Code.UNIMPLEMENTED`.
   func deleteOperation(request: Google_Longrunning_DeleteOperationRequest, context: StatusOnlyCallContext) -> EventLoopFuture<SwiftProtobuf.Google_Protobuf_Empty>
+  /// Starts asynchronous cancellation on a long-running operation.  The server
+  /// makes a best effort to cancel the operation, but success is not
+  /// guaranteed.  If the server doesn't support this method, it returns
+  /// `google.rpc.Code.UNIMPLEMENTED`.  Clients can use
+  /// [Operations.GetOperation][google.longrunning.Operations.GetOperation] or
+  /// other methods to check whether the cancellation succeeded or whether the
+  /// operation completed despite cancellation. On successful cancellation,
+  /// the operation is not deleted; instead, it becomes an operation with
+  /// an [Operation.error][google.longrunning.Operation.error] value with a [google.rpc.Status.code][google.rpc.Status.code] of 1,
+  /// corresponding to `Code.CANCELLED`.
   func cancelOperation(request: Google_Longrunning_CancelOperationRequest, context: StatusOnlyCallContext) -> EventLoopFuture<SwiftProtobuf.Google_Protobuf_Empty>
 }
 
 extension Google_Longrunning_OperationsProvider {
-  public var serviceName: String { return "google.longrunning.Operations" }
+  public var serviceName: Substring { return "google.longrunning.Operations" }
 
   /// Determines, calls and returns the appropriate request handler, depending on the request's method.
   /// Returns nil for methods not handled by this service.
-  public func handleMethod(_ methodName: String, callHandlerContext: CallHandlerContext) -> GRPCCallHandler? {
+  public func handleMethod(_ methodName: Substring, callHandlerContext: CallHandlerContext) -> GRPCCallHandler? {
     switch methodName {
     case "ListOperations":
-      return UnaryCallHandler(callHandlerContext: callHandlerContext) { context in
+      return CallHandlerFactory.makeUnary(callHandlerContext: callHandlerContext) { context in
         return { request in
           self.listOperations(request: request, context: context)
         }
       }
 
     case "GetOperation":
-      return UnaryCallHandler(callHandlerContext: callHandlerContext) { context in
+      return CallHandlerFactory.makeUnary(callHandlerContext: callHandlerContext) { context in
         return { request in
           self.getOperation(request: request, context: context)
         }
       }
 
     case "DeleteOperation":
-      return UnaryCallHandler(callHandlerContext: callHandlerContext) { context in
+      return CallHandlerFactory.makeUnary(callHandlerContext: callHandlerContext) { context in
         return { request in
           self.deleteOperation(request: request, context: context)
         }
       }
 
     case "CancelOperation":
-      return UnaryCallHandler(callHandlerContext: callHandlerContext) { context in
+      return CallHandlerFactory.makeUnary(callHandlerContext: callHandlerContext) { context in
         return { request in
           self.cancelOperation(request: request, context: context)
         }

@@ -20,44 +20,53 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 //
-import Foundation
 import GRPC
 import NIO
-import NIOHTTP1
 import SwiftProtobuf
 
 
-/// Usage: instantiate Sagittarius_Health_V1_HealthServiceClient, then call methods of this protocol to make API calls.
-public protocol Sagittarius_Health_V1_HealthService {
-  func check(_ request: Sagittarius_Health_V1_HealthCheckRequest, callOptions: CallOptions?) -> UnaryCall<Sagittarius_Health_V1_HealthCheckRequest, Sagittarius_Health_V1_HealthCheckResponse>
+/// Usage: instantiate Sagittarius_Health_V1_HealthClient, then call methods of this protocol to make API calls.
+public protocol Sagittarius_Health_V1_HealthClientProtocol: GRPCClient {
+  func check(
+    _ request: Sagittarius_Health_V1_HealthCheckRequest,
+    callOptions: CallOptions?
+  ) -> UnaryCall<Sagittarius_Health_V1_HealthCheckRequest, Sagittarius_Health_V1_HealthCheckResponse>
+
 }
 
-public final class Sagittarius_Health_V1_HealthServiceClient: GRPCClient, Sagittarius_Health_V1_HealthService {
-  public let connection: ClientConnection
+extension Sagittarius_Health_V1_HealthClientProtocol {
+
+  /// Unary call to Check
+  ///
+  /// - Parameters:
+  ///   - request: Request to send to Check.
+  ///   - callOptions: Call options.
+  /// - Returns: A `UnaryCall` with futures for the metadata, status and response.
+  public func check(
+    _ request: Sagittarius_Health_V1_HealthCheckRequest,
+    callOptions: CallOptions? = nil
+  ) -> UnaryCall<Sagittarius_Health_V1_HealthCheckRequest, Sagittarius_Health_V1_HealthCheckResponse> {
+    return self.makeUnaryCall(
+      path: "/sagittarius.health.v1.Health/Check",
+      request: request,
+      callOptions: callOptions ?? self.defaultCallOptions
+    )
+  }
+}
+
+public final class Sagittarius_Health_V1_HealthClient: Sagittarius_Health_V1_HealthClientProtocol {
+  public let channel: GRPCChannel
   public var defaultCallOptions: CallOptions
 
   /// Creates a client for the sagittarius.health.v1.Health service.
   ///
   /// - Parameters:
-  ///   - connection: `ClientConnection` to the service host.
+  ///   - channel: `GRPCChannel` to the service host.
   ///   - defaultCallOptions: Options to use for each service call if the user doesn't provide them.
-  public init(connection: ClientConnection, defaultCallOptions: CallOptions = CallOptions()) {
-    self.connection = connection
+  public init(channel: GRPCChannel, defaultCallOptions: CallOptions = CallOptions()) {
+    self.channel = channel
     self.defaultCallOptions = defaultCallOptions
   }
-
-  /// Asynchronous unary call to Check.
-  ///
-  /// - Parameters:
-  ///   - request: Request to send to Check.
-  ///   - callOptions: Call options; `self.defaultCallOptions` is used if `nil`.
-  /// - Returns: A `UnaryCall` with futures for the metadata, status and response.
-  public func check(_ request: Sagittarius_Health_V1_HealthCheckRequest, callOptions: CallOptions? = nil) -> UnaryCall<Sagittarius_Health_V1_HealthCheckRequest, Sagittarius_Health_V1_HealthCheckResponse> {
-    return self.makeUnaryCall(path: "/sagittarius.health.v1.Health/Check",
-                              request: request,
-                              callOptions: callOptions ?? self.defaultCallOptions)
-  }
-
 }
 
 /// To build a server, implement a class that conforms to this protocol.
@@ -66,14 +75,14 @@ public protocol Sagittarius_Health_V1_HealthProvider: CallHandlerProvider {
 }
 
 extension Sagittarius_Health_V1_HealthProvider {
-  public var serviceName: String { return "sagittarius.health.v1.Health" }
+  public var serviceName: Substring { return "sagittarius.health.v1.Health" }
 
   /// Determines, calls and returns the appropriate request handler, depending on the request's method.
   /// Returns nil for methods not handled by this service.
-  public func handleMethod(_ methodName: String, callHandlerContext: CallHandlerContext) -> GRPCCallHandler? {
+  public func handleMethod(_ methodName: Substring, callHandlerContext: CallHandlerContext) -> GRPCCallHandler? {
     switch methodName {
     case "Check":
-      return UnaryCallHandler(callHandlerContext: callHandlerContext) { context in
+      return CallHandlerFactory.makeUnary(callHandlerContext: callHandlerContext) { context in
         return { request in
           self.check(request: request, context: context)
         }

@@ -20,208 +20,293 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 //
-import Foundation
 import GRPC
 import NIO
-import NIOHTTP1
 import SwiftProtobuf
 
 
-/// Usage: instantiate Sagittarius_Translation_V1_TranslationServiceClient, then call methods of this protocol to make API calls.
-public protocol Sagittarius_Translation_V1_TranslationService {
-  func translateMedia(_ request: Sagittarius_Translation_V1_MediaTranslationRequest, callOptions: CallOptions?) -> UnaryCall<Sagittarius_Translation_V1_MediaTranslationRequest, Sagittarius_Translation_V1_MediaTranslationResponse>
-  func detectLanguage(_ request: Sagittarius_Translation_V1_DetectionRequest, callOptions: CallOptions?) -> UnaryCall<Sagittarius_Translation_V1_DetectionRequest, Sagittarius_Translation_V1_DetectionResponse>
-  func transcript(_ request: Sagittarius_Translation_V1_TranscriptRequest, callOptions: CallOptions?) -> UnaryCall<Sagittarius_Translation_V1_TranscriptRequest, Sagittarius_Translation_V1_TranscriptResponse>
-  func translateText(_ request: Sagittarius_Translation_V1_TextTranslationRequest, callOptions: CallOptions?) -> UnaryCall<Sagittarius_Translation_V1_TextTranslationRequest, Sagittarius_Translation_V1_TextTranslationResponse>
-  func streamingTranslation(callOptions: CallOptions?, handler: @escaping (Sagittarius_Translation_V1_StreamingTranslationResponse) -> Void) -> BidirectionalStreamingCall<Sagittarius_Translation_V1_StreamingTranslationRequest, Sagittarius_Translation_V1_StreamingTranslationResponse>
-  func streamingTranslationTask(_ request: Sagittarius_Translation_V1_StreamingTranslationTaskRequest, callOptions: CallOptions?) -> UnaryCall<Sagittarius_Translation_V1_StreamingTranslationTaskRequest, Sagittarius_Translation_V1_StreamingTranslationTaskResponse>
-  func processOrder(_ request: Sagittarius_Translation_V1_ProcessOrderRequest, callOptions: CallOptions?) -> UnaryCall<Sagittarius_Translation_V1_ProcessOrderRequest, Sagittarius_Translation_V1_ProcessOrderResponse>
-  func getUserQuota(_ request: Sagittarius_Translation_V1_UserQuotaRequest, callOptions: CallOptions?) -> UnaryCall<Sagittarius_Translation_V1_UserQuotaRequest, Sagittarius_Translation_V1_UserQuotaResponse>
+/// Usage: instantiate Sagittarius_Translation_V1_TranslationClient, then call methods of this protocol to make API calls.
+public protocol Sagittarius_Translation_V1_TranslationClientProtocol: GRPCClient {
+  func translateMedia(
+    _ request: Sagittarius_Translation_V1_MediaTranslationRequest,
+    callOptions: CallOptions?
+  ) -> UnaryCall<Sagittarius_Translation_V1_MediaTranslationRequest, Sagittarius_Translation_V1_MediaTranslationResponse>
+
+  func detectLanguage(
+    _ request: Sagittarius_Translation_V1_DetectionRequest,
+    callOptions: CallOptions?
+  ) -> UnaryCall<Sagittarius_Translation_V1_DetectionRequest, Sagittarius_Translation_V1_DetectionResponse>
+
+  func transcript(
+    _ request: Sagittarius_Translation_V1_TranscriptRequest,
+    callOptions: CallOptions?
+  ) -> UnaryCall<Sagittarius_Translation_V1_TranscriptRequest, Sagittarius_Translation_V1_TranscriptResponse>
+
+  func translateText(
+    _ request: Sagittarius_Translation_V1_TextTranslationRequest,
+    callOptions: CallOptions?
+  ) -> UnaryCall<Sagittarius_Translation_V1_TextTranslationRequest, Sagittarius_Translation_V1_TextTranslationResponse>
+
+  func streamingTranslation(
+    callOptions: CallOptions?,
+    handler: @escaping (Sagittarius_Translation_V1_StreamingTranslationResponse) -> Void
+  ) -> BidirectionalStreamingCall<Sagittarius_Translation_V1_StreamingTranslationRequest, Sagittarius_Translation_V1_StreamingTranslationResponse>
+
+  func streamingTranslationTask(
+    _ request: Sagittarius_Translation_V1_StreamingTranslationTaskRequest,
+    callOptions: CallOptions?
+  ) -> UnaryCall<Sagittarius_Translation_V1_StreamingTranslationTaskRequest, Sagittarius_Translation_V1_StreamingTranslationTaskResponse>
+
+  func processOrder(
+    _ request: Sagittarius_Translation_V1_ProcessOrderRequest,
+    callOptions: CallOptions?
+  ) -> UnaryCall<Sagittarius_Translation_V1_ProcessOrderRequest, Sagittarius_Translation_V1_ProcessOrderResponse>
+
+  func getUserQuota(
+    _ request: Sagittarius_Translation_V1_UserQuotaRequest,
+    callOptions: CallOptions?
+  ) -> UnaryCall<Sagittarius_Translation_V1_UserQuotaRequest, Sagittarius_Translation_V1_UserQuotaResponse>
+
 }
 
-public final class Sagittarius_Translation_V1_TranslationServiceClient: GRPCClient, Sagittarius_Translation_V1_TranslationService {
-  public let connection: ClientConnection
-  public var defaultCallOptions: CallOptions
+extension Sagittarius_Translation_V1_TranslationClientProtocol {
 
-  /// Creates a client for the sagittarius.translation.v1.Translation service.
-  ///
-  /// - Parameters:
-  ///   - connection: `ClientConnection` to the service host.
-  ///   - defaultCallOptions: Options to use for each service call if the user doesn't provide them.
-  public init(connection: ClientConnection, defaultCallOptions: CallOptions = CallOptions()) {
-    self.connection = connection
-    self.defaultCallOptions = defaultCallOptions
-  }
-
-  /// Asynchronous unary call to TranslateMedia.
+  /// Translate media(audio or video) by media identity
   ///
   /// - Parameters:
   ///   - request: Request to send to TranslateMedia.
-  ///   - callOptions: Call options; `self.defaultCallOptions` is used if `nil`.
+  ///   - callOptions: Call options.
   /// - Returns: A `UnaryCall` with futures for the metadata, status and response.
-  public func translateMedia(_ request: Sagittarius_Translation_V1_MediaTranslationRequest, callOptions: CallOptions? = nil) -> UnaryCall<Sagittarius_Translation_V1_MediaTranslationRequest, Sagittarius_Translation_V1_MediaTranslationResponse> {
-    return self.makeUnaryCall(path: "/sagittarius.translation.v1.Translation/TranslateMedia",
-                              request: request,
-                              callOptions: callOptions ?? self.defaultCallOptions)
+  public func translateMedia(
+    _ request: Sagittarius_Translation_V1_MediaTranslationRequest,
+    callOptions: CallOptions? = nil
+  ) -> UnaryCall<Sagittarius_Translation_V1_MediaTranslationRequest, Sagittarius_Translation_V1_MediaTranslationResponse> {
+    return self.makeUnaryCall(
+      path: "/sagittarius.translation.v1.Translation/TranslateMedia",
+      request: request,
+      callOptions: callOptions ?? self.defaultCallOptions
+    )
   }
 
-  /// Asynchronous unary call to DetectLanguage.
+  /// detect the language of text
   ///
   /// - Parameters:
   ///   - request: Request to send to DetectLanguage.
-  ///   - callOptions: Call options; `self.defaultCallOptions` is used if `nil`.
+  ///   - callOptions: Call options.
   /// - Returns: A `UnaryCall` with futures for the metadata, status and response.
-  public func detectLanguage(_ request: Sagittarius_Translation_V1_DetectionRequest, callOptions: CallOptions? = nil) -> UnaryCall<Sagittarius_Translation_V1_DetectionRequest, Sagittarius_Translation_V1_DetectionResponse> {
-    return self.makeUnaryCall(path: "/sagittarius.translation.v1.Translation/DetectLanguage",
-                              request: request,
-                              callOptions: callOptions ?? self.defaultCallOptions)
+  public func detectLanguage(
+    _ request: Sagittarius_Translation_V1_DetectionRequest,
+    callOptions: CallOptions? = nil
+  ) -> UnaryCall<Sagittarius_Translation_V1_DetectionRequest, Sagittarius_Translation_V1_DetectionResponse> {
+    return self.makeUnaryCall(
+      path: "/sagittarius.translation.v1.Translation/DetectLanguage",
+      request: request,
+      callOptions: callOptions ?? self.defaultCallOptions
+    )
   }
 
-  /// Asynchronous unary call to Transcript.
+  /// Unary call to Transcript
   ///
   /// - Parameters:
   ///   - request: Request to send to Transcript.
-  ///   - callOptions: Call options; `self.defaultCallOptions` is used if `nil`.
+  ///   - callOptions: Call options.
   /// - Returns: A `UnaryCall` with futures for the metadata, status and response.
-  public func transcript(_ request: Sagittarius_Translation_V1_TranscriptRequest, callOptions: CallOptions? = nil) -> UnaryCall<Sagittarius_Translation_V1_TranscriptRequest, Sagittarius_Translation_V1_TranscriptResponse> {
-    return self.makeUnaryCall(path: "/sagittarius.translation.v1.Translation/Transcript",
-                              request: request,
-                              callOptions: callOptions ?? self.defaultCallOptions)
+  public func transcript(
+    _ request: Sagittarius_Translation_V1_TranscriptRequest,
+    callOptions: CallOptions? = nil
+  ) -> UnaryCall<Sagittarius_Translation_V1_TranscriptRequest, Sagittarius_Translation_V1_TranscriptResponse> {
+    return self.makeUnaryCall(
+      path: "/sagittarius.translation.v1.Translation/Transcript",
+      request: request,
+      callOptions: callOptions ?? self.defaultCallOptions
+    )
   }
 
-  /// Asynchronous unary call to TranslateText.
+  /// Translate text by Google Translation Service
   ///
   /// - Parameters:
   ///   - request: Request to send to TranslateText.
-  ///   - callOptions: Call options; `self.defaultCallOptions` is used if `nil`.
+  ///   - callOptions: Call options.
   /// - Returns: A `UnaryCall` with futures for the metadata, status and response.
-  public func translateText(_ request: Sagittarius_Translation_V1_TextTranslationRequest, callOptions: CallOptions? = nil) -> UnaryCall<Sagittarius_Translation_V1_TextTranslationRequest, Sagittarius_Translation_V1_TextTranslationResponse> {
-    return self.makeUnaryCall(path: "/sagittarius.translation.v1.Translation/TranslateText",
-                              request: request,
-                              callOptions: callOptions ?? self.defaultCallOptions)
+  public func translateText(
+    _ request: Sagittarius_Translation_V1_TextTranslationRequest,
+    callOptions: CallOptions? = nil
+  ) -> UnaryCall<Sagittarius_Translation_V1_TextTranslationRequest, Sagittarius_Translation_V1_TextTranslationResponse> {
+    return self.makeUnaryCall(
+      path: "/sagittarius.translation.v1.Translation/TranslateText",
+      request: request,
+      callOptions: callOptions ?? self.defaultCallOptions
+    )
   }
 
-  /// Asynchronous bidirectional-streaming call to StreamingTranslation.
+  /// Performs bidirectional streaming audio translation: receive results after or while
+  /// sending audio. This method is only available via the gRPC API (not REST).
   ///
   /// Callers should use the `send` method on the returned object to send messages
   /// to the server. The caller should send an `.end` after the final message has been sent.
   ///
   /// - Parameters:
-  ///   - callOptions: Call options; `self.defaultCallOptions` is used if `nil`.
+  ///   - callOptions: Call options.
   ///   - handler: A closure called when each response is received from the server.
   /// - Returns: A `ClientStreamingCall` with futures for the metadata and status.
-  public func streamingTranslation(callOptions: CallOptions? = nil, handler: @escaping (Sagittarius_Translation_V1_StreamingTranslationResponse) -> Void) -> BidirectionalStreamingCall<Sagittarius_Translation_V1_StreamingTranslationRequest, Sagittarius_Translation_V1_StreamingTranslationResponse> {
-    return self.makeBidirectionalStreamingCall(path: "/sagittarius.translation.v1.Translation/StreamingTranslation",
-                                               callOptions: callOptions ?? self.defaultCallOptions,
-                                               handler: handler)
+  public func streamingTranslation(
+    callOptions: CallOptions? = nil,
+    handler: @escaping (Sagittarius_Translation_V1_StreamingTranslationResponse) -> Void
+  ) -> BidirectionalStreamingCall<Sagittarius_Translation_V1_StreamingTranslationRequest, Sagittarius_Translation_V1_StreamingTranslationResponse> {
+    return self.makeBidirectionalStreamingCall(
+      path: "/sagittarius.translation.v1.Translation/StreamingTranslation",
+      callOptions: callOptions ?? self.defaultCallOptions,
+      handler: handler
+    )
   }
 
-  /// Asynchronous unary call to StreamingTranslationTask.
+  /// Check StreamingTranslationTask results or estimate finish time
+  /// and maybe other informations related to the task
   ///
   /// - Parameters:
   ///   - request: Request to send to StreamingTranslationTask.
-  ///   - callOptions: Call options; `self.defaultCallOptions` is used if `nil`.
+  ///   - callOptions: Call options.
   /// - Returns: A `UnaryCall` with futures for the metadata, status and response.
-  public func streamingTranslationTask(_ request: Sagittarius_Translation_V1_StreamingTranslationTaskRequest, callOptions: CallOptions? = nil) -> UnaryCall<Sagittarius_Translation_V1_StreamingTranslationTaskRequest, Sagittarius_Translation_V1_StreamingTranslationTaskResponse> {
-    return self.makeUnaryCall(path: "/sagittarius.translation.v1.Translation/StreamingTranslationTask",
-                              request: request,
-                              callOptions: callOptions ?? self.defaultCallOptions)
+  public func streamingTranslationTask(
+    _ request: Sagittarius_Translation_V1_StreamingTranslationTaskRequest,
+    callOptions: CallOptions? = nil
+  ) -> UnaryCall<Sagittarius_Translation_V1_StreamingTranslationTaskRequest, Sagittarius_Translation_V1_StreamingTranslationTaskResponse> {
+    return self.makeUnaryCall(
+      path: "/sagittarius.translation.v1.Translation/StreamingTranslationTask",
+      request: request,
+      callOptions: callOptions ?? self.defaultCallOptions
+    )
   }
 
-  /// Asynchronous unary call to ProcessOrder.
+  /// Start an unpaid or failed order
+  /// for internal use only
   ///
   /// - Parameters:
   ///   - request: Request to send to ProcessOrder.
-  ///   - callOptions: Call options; `self.defaultCallOptions` is used if `nil`.
+  ///   - callOptions: Call options.
   /// - Returns: A `UnaryCall` with futures for the metadata, status and response.
-  public func processOrder(_ request: Sagittarius_Translation_V1_ProcessOrderRequest, callOptions: CallOptions? = nil) -> UnaryCall<Sagittarius_Translation_V1_ProcessOrderRequest, Sagittarius_Translation_V1_ProcessOrderResponse> {
-    return self.makeUnaryCall(path: "/sagittarius.translation.v1.Translation/ProcessOrder",
-                              request: request,
-                              callOptions: callOptions ?? self.defaultCallOptions)
+  public func processOrder(
+    _ request: Sagittarius_Translation_V1_ProcessOrderRequest,
+    callOptions: CallOptions? = nil
+  ) -> UnaryCall<Sagittarius_Translation_V1_ProcessOrderRequest, Sagittarius_Translation_V1_ProcessOrderResponse> {
+    return self.makeUnaryCall(
+      path: "/sagittarius.translation.v1.Translation/ProcessOrder",
+      request: request,
+      callOptions: callOptions ?? self.defaultCallOptions
+    )
   }
 
-  /// Asynchronous unary call to GetUserQuota.
+  /// Get User Quota
   ///
   /// - Parameters:
   ///   - request: Request to send to GetUserQuota.
-  ///   - callOptions: Call options; `self.defaultCallOptions` is used if `nil`.
+  ///   - callOptions: Call options.
   /// - Returns: A `UnaryCall` with futures for the metadata, status and response.
-  public func getUserQuota(_ request: Sagittarius_Translation_V1_UserQuotaRequest, callOptions: CallOptions? = nil) -> UnaryCall<Sagittarius_Translation_V1_UserQuotaRequest, Sagittarius_Translation_V1_UserQuotaResponse> {
-    return self.makeUnaryCall(path: "/sagittarius.translation.v1.Translation/GetUserQuota",
-                              request: request,
-                              callOptions: callOptions ?? self.defaultCallOptions)
+  public func getUserQuota(
+    _ request: Sagittarius_Translation_V1_UserQuotaRequest,
+    callOptions: CallOptions? = nil
+  ) -> UnaryCall<Sagittarius_Translation_V1_UserQuotaRequest, Sagittarius_Translation_V1_UserQuotaResponse> {
+    return self.makeUnaryCall(
+      path: "/sagittarius.translation.v1.Translation/GetUserQuota",
+      request: request,
+      callOptions: callOptions ?? self.defaultCallOptions
+    )
   }
+}
 
+public final class Sagittarius_Translation_V1_TranslationClient: Sagittarius_Translation_V1_TranslationClientProtocol {
+  public let channel: GRPCChannel
+  public var defaultCallOptions: CallOptions
+
+  /// Creates a client for the sagittarius.translation.v1.Translation service.
+  ///
+  /// - Parameters:
+  ///   - channel: `GRPCChannel` to the service host.
+  ///   - defaultCallOptions: Options to use for each service call if the user doesn't provide them.
+  public init(channel: GRPCChannel, defaultCallOptions: CallOptions = CallOptions()) {
+    self.channel = channel
+    self.defaultCallOptions = defaultCallOptions
+  }
 }
 
 /// To build a server, implement a class that conforms to this protocol.
 public protocol Sagittarius_Translation_V1_TranslationProvider: CallHandlerProvider {
+  /// Translate media(audio or video) by media identity
   func translateMedia(request: Sagittarius_Translation_V1_MediaTranslationRequest, context: StatusOnlyCallContext) -> EventLoopFuture<Sagittarius_Translation_V1_MediaTranslationResponse>
+  /// detect the language of text
   func detectLanguage(request: Sagittarius_Translation_V1_DetectionRequest, context: StatusOnlyCallContext) -> EventLoopFuture<Sagittarius_Translation_V1_DetectionResponse>
   func transcript(request: Sagittarius_Translation_V1_TranscriptRequest, context: StatusOnlyCallContext) -> EventLoopFuture<Sagittarius_Translation_V1_TranscriptResponse>
+  /// Translate text by Google Translation Service
   func translateText(request: Sagittarius_Translation_V1_TextTranslationRequest, context: StatusOnlyCallContext) -> EventLoopFuture<Sagittarius_Translation_V1_TextTranslationResponse>
+  /// Performs bidirectional streaming audio translation: receive results after or while
+  /// sending audio. This method is only available via the gRPC API (not REST).
   func streamingTranslation(context: StreamingResponseCallContext<Sagittarius_Translation_V1_StreamingTranslationResponse>) -> EventLoopFuture<(StreamEvent<Sagittarius_Translation_V1_StreamingTranslationRequest>) -> Void>
+  /// Check StreamingTranslationTask results or estimate finish time
+  /// and maybe other informations related to the task
   func streamingTranslationTask(request: Sagittarius_Translation_V1_StreamingTranslationTaskRequest, context: StatusOnlyCallContext) -> EventLoopFuture<Sagittarius_Translation_V1_StreamingTranslationTaskResponse>
+  /// Start an unpaid or failed order
+  /// for internal use only
   func processOrder(request: Sagittarius_Translation_V1_ProcessOrderRequest, context: StatusOnlyCallContext) -> EventLoopFuture<Sagittarius_Translation_V1_ProcessOrderResponse>
+  /// Get User Quota
   func getUserQuota(request: Sagittarius_Translation_V1_UserQuotaRequest, context: StatusOnlyCallContext) -> EventLoopFuture<Sagittarius_Translation_V1_UserQuotaResponse>
 }
 
 extension Sagittarius_Translation_V1_TranslationProvider {
-  public var serviceName: String { return "sagittarius.translation.v1.Translation" }
+  public var serviceName: Substring { return "sagittarius.translation.v1.Translation" }
 
   /// Determines, calls and returns the appropriate request handler, depending on the request's method.
   /// Returns nil for methods not handled by this service.
-  public func handleMethod(_ methodName: String, callHandlerContext: CallHandlerContext) -> GRPCCallHandler? {
+  public func handleMethod(_ methodName: Substring, callHandlerContext: CallHandlerContext) -> GRPCCallHandler? {
     switch methodName {
     case "TranslateMedia":
-      return UnaryCallHandler(callHandlerContext: callHandlerContext) { context in
+      return CallHandlerFactory.makeUnary(callHandlerContext: callHandlerContext) { context in
         return { request in
           self.translateMedia(request: request, context: context)
         }
       }
 
     case "DetectLanguage":
-      return UnaryCallHandler(callHandlerContext: callHandlerContext) { context in
+      return CallHandlerFactory.makeUnary(callHandlerContext: callHandlerContext) { context in
         return { request in
           self.detectLanguage(request: request, context: context)
         }
       }
 
     case "Transcript":
-      return UnaryCallHandler(callHandlerContext: callHandlerContext) { context in
+      return CallHandlerFactory.makeUnary(callHandlerContext: callHandlerContext) { context in
         return { request in
           self.transcript(request: request, context: context)
         }
       }
 
     case "TranslateText":
-      return UnaryCallHandler(callHandlerContext: callHandlerContext) { context in
+      return CallHandlerFactory.makeUnary(callHandlerContext: callHandlerContext) { context in
         return { request in
           self.translateText(request: request, context: context)
         }
       }
 
     case "StreamingTranslation":
-      return BidirectionalStreamingCallHandler(callHandlerContext: callHandlerContext) { context in
+      return CallHandlerFactory.makeBidirectionalStreaming(callHandlerContext: callHandlerContext) { context in
         return self.streamingTranslation(context: context)
       }
 
     case "StreamingTranslationTask":
-      return UnaryCallHandler(callHandlerContext: callHandlerContext) { context in
+      return CallHandlerFactory.makeUnary(callHandlerContext: callHandlerContext) { context in
         return { request in
           self.streamingTranslationTask(request: request, context: context)
         }
       }
 
     case "ProcessOrder":
-      return UnaryCallHandler(callHandlerContext: callHandlerContext) { context in
+      return CallHandlerFactory.makeUnary(callHandlerContext: callHandlerContext) { context in
         return { request in
           self.processOrder(request: request, context: context)
         }
       }
 
     case "GetUserQuota":
-      return UnaryCallHandler(callHandlerContext: callHandlerContext) { context in
+      return CallHandlerFactory.makeUnary(callHandlerContext: callHandlerContext) { context in
         return { request in
           self.getUserQuota(request: request, context: context)
         }

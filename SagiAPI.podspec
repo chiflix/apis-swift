@@ -16,7 +16,7 @@ Pod::Spec.new do |spec|
   #
 
   spec.name         = "SagiAPI"
-  spec.version      = "0.0.2"
+  spec.version      = "0.0.3"
   spec.summary      = "The SagiAPI with Swift."
 
   # This description is used to generate tags and improve search results.
@@ -119,7 +119,7 @@ Pod::Spec.new do |spec|
   #
 
   spec.dependency  'SwiftProtobuf', '~> 1.12.0'
-  spec.dependency  'gRPC-Swift', '~> 1.0.0-alpha.18'
+  spec.dependency  'gRPC-Swift', '~> 1.0.0-alpha.19'
   # spec.frameworks = "SomeFramework", "AnotherFramework"
 
   # spec.library   = "iconv"

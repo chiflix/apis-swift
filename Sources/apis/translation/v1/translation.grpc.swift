@@ -35,6 +35,7 @@ public protocol Sagittarius_Translation_V1_TranslationService {
   func translateText(_ request: Sagittarius_Translation_V1_TextTranslationRequest, callOptions: CallOptions?) -> UnaryCall<Sagittarius_Translation_V1_TextTranslationRequest, Sagittarius_Translation_V1_TextTranslationResponse>
   func streamingTranslation(callOptions: CallOptions?, handler: @escaping (Sagittarius_Translation_V1_StreamingTranslationResponse) -> Void) -> BidirectionalStreamingCall<Sagittarius_Translation_V1_StreamingTranslationRequest, Sagittarius_Translation_V1_StreamingTranslationResponse>
   func streamingTranslationTask(_ request: Sagittarius_Translation_V1_StreamingTranslationTaskRequest, callOptions: CallOptions?) -> UnaryCall<Sagittarius_Translation_V1_StreamingTranslationTaskRequest, Sagittarius_Translation_V1_StreamingTranslationTaskResponse>
+  func processOrder(_ request: Sagittarius_Translation_V1_ProcessOrderRequest, callOptions: CallOptions?) -> UnaryCall<Sagittarius_Translation_V1_ProcessOrderRequest, Sagittarius_Translation_V1_ProcessOrderResponse>
   func getUserQuota(_ request: Sagittarius_Translation_V1_UserQuotaRequest, callOptions: CallOptions?) -> UnaryCall<Sagittarius_Translation_V1_UserQuotaRequest, Sagittarius_Translation_V1_UserQuotaResponse>
 }
 
@@ -127,6 +128,18 @@ public final class Sagittarius_Translation_V1_TranslationServiceClient: GRPCClie
                               callOptions: callOptions ?? self.defaultCallOptions)
   }
 
+  /// Asynchronous unary call to ProcessOrder.
+  ///
+  /// - Parameters:
+  ///   - request: Request to send to ProcessOrder.
+  ///   - callOptions: Call options; `self.defaultCallOptions` is used if `nil`.
+  /// - Returns: A `UnaryCall` with futures for the metadata, status and response.
+  public func processOrder(_ request: Sagittarius_Translation_V1_ProcessOrderRequest, callOptions: CallOptions? = nil) -> UnaryCall<Sagittarius_Translation_V1_ProcessOrderRequest, Sagittarius_Translation_V1_ProcessOrderResponse> {
+    return self.makeUnaryCall(path: "/sagittarius.translation.v1.Translation/ProcessOrder",
+                              request: request,
+                              callOptions: callOptions ?? self.defaultCallOptions)
+  }
+
   /// Asynchronous unary call to GetUserQuota.
   ///
   /// - Parameters:
@@ -149,6 +162,7 @@ public protocol Sagittarius_Translation_V1_TranslationProvider: CallHandlerProvi
   func translateText(request: Sagittarius_Translation_V1_TextTranslationRequest, context: StatusOnlyCallContext) -> EventLoopFuture<Sagittarius_Translation_V1_TextTranslationResponse>
   func streamingTranslation(context: StreamingResponseCallContext<Sagittarius_Translation_V1_StreamingTranslationResponse>) -> EventLoopFuture<(StreamEvent<Sagittarius_Translation_V1_StreamingTranslationRequest>) -> Void>
   func streamingTranslationTask(request: Sagittarius_Translation_V1_StreamingTranslationTaskRequest, context: StatusOnlyCallContext) -> EventLoopFuture<Sagittarius_Translation_V1_StreamingTranslationTaskResponse>
+  func processOrder(request: Sagittarius_Translation_V1_ProcessOrderRequest, context: StatusOnlyCallContext) -> EventLoopFuture<Sagittarius_Translation_V1_ProcessOrderResponse>
   func getUserQuota(request: Sagittarius_Translation_V1_UserQuotaRequest, context: StatusOnlyCallContext) -> EventLoopFuture<Sagittarius_Translation_V1_UserQuotaResponse>
 }
 
@@ -196,6 +210,13 @@ extension Sagittarius_Translation_V1_TranslationProvider {
       return UnaryCallHandler(callHandlerContext: callHandlerContext) { context in
         return { request in
           self.streamingTranslationTask(request: request, context: context)
+        }
+      }
+
+    case "ProcessOrder":
+      return UnaryCallHandler(callHandlerContext: callHandlerContext) { context in
+        return { request in
+          self.processOrder(request: request, context: context)
         }
       }
 
